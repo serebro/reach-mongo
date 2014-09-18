@@ -1,0 +1,29 @@
+{
+	"name": "serebro/reach",
+	"description": "MongoDB ODM",
+	"version": "0.9",
+	"keywords": ["mongodb", "mongo", "php", "odm", "orm", "reach", "active record"],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Sergey Ilin",
+			"homepage": "http://github.com/serebro"
+		}
+	],
+	"require": {
+		"php": ">=5.4.0",
+		"ext-mongo": ">=1.4",
+		"serebro/reach-common": "dev-master"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "~4.0",
+		"chriskite/phactory": "dev-master",
+		"athletic/athletic": "dev-master",
+		"satooshi/php-coveralls": "dev-master"
+	},
+    "autoload": {
+        "psr-0": {
+            "Reach\\": "src"
+        }
+    }
+}
