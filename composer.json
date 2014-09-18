@@ -1,5 +1,5 @@
 {
-	"name": "serebro/reach",
+	"name": "serebro/reach-mongo",
 	"description": "MongoDB ODM",
 	"version": "0.9",
 	"keywords": ["mongodb", "mongo", "php", "odm", "orm", "reach", "active record"],
