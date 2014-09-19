@@ -3,6 +3,7 @@
 namespace Reach\Mongo;
 
 use Exception;
+use InvalidArgumentException;
 
 class Query extends Criteria implements QueryInterface
 {
@@ -23,12 +24,26 @@ class Query extends Criteria implements QueryInterface
         parent::__construct($criteria);
     }
 
+    public function setConnectionName($name)
+    {
+        if (!is_string($name) || empty($name)) {
+            throw new InvalidArgumentException('Invalid argument');
+        }
+
+        $this->_connection_name = $name;
+    }
+
+    public function getConnectionName()
+    {
+        return $this->_connection_name;
+    }
+
     /**
      * @return array
      */
     public function explain()
     {
-        $criteria = $this->_criteria;
+        $criteria = $this->criteria;
         $criteria['$explain'] = true;
         $class = $this->_hydrate_class;
         $collection = $class::getCollection($this->_connection_name)->getMongoCollection();
@@ -41,7 +56,7 @@ class Query extends Criteria implements QueryInterface
      * @param bool  $as_array
      * @return null|DocumentInterface
      */
-    public function findOne(array $fields = [], $as_array = false)
+    public function one(array $fields = [], $as_array = false)
     {
         $class = $this->_hydrate_class;
         return $class::findOne($this, $fields, $as_array);
@@ -51,7 +66,7 @@ class Query extends Criteria implements QueryInterface
      * @param array $fields
      * @return \Reach\Mongo\ResultSet
      */
-    public function find(array $fields = [])
+    public function all(array $fields = [])
     {
         $class = $this->_hydrate_class;
         /** @var \Reach\Mongo\ResultSet $resultSet */

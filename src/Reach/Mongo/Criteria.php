@@ -8,7 +8,7 @@ use MongoCode;
 class Criteria implements CriteriaInterface
 {
 
-    protected $_criteria = [];
+    protected $criteria = [];
 
     protected static $selectors = [
         '>'      => '$gt',
@@ -61,7 +61,7 @@ class Criteria implements CriteriaInterface
             $criteria = $criteria->asArray();
         }
 
-        $this->_criteria = $criteria;
+        $this->criteria = $criteria;
     }
 
     /**
@@ -120,7 +120,7 @@ class Criteria implements CriteriaInterface
             $code = new MongoCode($code, $scope);
         }
 
-        $this->_criteria['$where'] = $code;
+        $this->criteria['$where'] = $code;
 
         return $this;
     }
@@ -137,11 +137,11 @@ class Criteria implements CriteriaInterface
             throw new Exception('Invalid parameter type.');
         }
 
-        if (!isset($this->_criteria['$orderby'])) {
-            $this->_criteria['$orderby'] = [];
+        if (!isset($this->criteria['$orderby'])) {
+            $this->criteria['$orderby'] = [];
         }
 
-        $this->_criteria['$orderby'] = array_merge($this->_criteria['$orderby'], $order);
+        $this->criteria['$orderby'] = array_merge($this->criteria['$orderby'], $order);
         return $this;
     }
 
@@ -157,7 +157,7 @@ class Criteria implements CriteriaInterface
             throw new Exception('Invalid parameter type.');
         }
 
-        $this->_criteria['$comment'] = $comment;
+        $this->criteria['$comment'] = $comment;
         return $this;
     }
 
@@ -173,7 +173,7 @@ class Criteria implements CriteriaInterface
             throw new Exception('Invalid parameter type.');
         }
 
-        $this->_criteria['$hint'] = $hint;
+        $this->criteria['$hint'] = $hint;
         return $this;
     }
 
@@ -189,7 +189,7 @@ class Criteria implements CriteriaInterface
             throw new Exception('Invalid parameter type.');
         }
 
-        $this->_criteria['$maxScan'] = $maxScan;
+        $this->criteria['$maxScan'] = $maxScan;
         return $this;
     }
 
@@ -205,7 +205,7 @@ class Criteria implements CriteriaInterface
             throw new Exception('Invalid parameter type.');
         }
 
-        $this->_criteria['$maxTimeMS'] = $maxTimeMS;
+        $this->criteria['$maxTimeMS'] = $maxTimeMS;
         return $this;
     }
 
@@ -221,7 +221,7 @@ class Criteria implements CriteriaInterface
             throw new Exception('Invalid parameter type.');
         }
 
-        $this->_criteria['$maxTimeMS'] = $max;
+        $this->criteria['$maxTimeMS'] = $max;
         return $this;
     }
 
@@ -237,7 +237,7 @@ class Criteria implements CriteriaInterface
             throw new Exception('Invalid parameter type.');
         }
 
-        $this->_criteria['$min'] = $min;
+        $this->criteria['$min'] = $min;
         return $this;
     }
 
@@ -247,18 +247,18 @@ class Criteria implements CriteriaInterface
      */
     public function snapshot()
     {
-        $this->_criteria['$snapshot'] = true;
+        $this->criteria['$snapshot'] = true;
         return $this;
     }
 
     public function getOrderBy()
     {
-        return isset($this->_criteria['$orderby']) ? $this->_criteria['$orderby'] : [];
+        return isset($this->criteria['$orderby']) ? $this->criteria['$orderby'] : [];
     }
 
     public function getQuery()
     {
-        return isset($this->_criteria['$query']) ? $this->_criteria['$query'] : [];
+        return isset($this->criteria['$query']) ? $this->criteria['$query'] : [];
     }
 
     /**
@@ -266,7 +266,7 @@ class Criteria implements CriteriaInterface
      */
     public function asArray()
     {
-        return $this->_criteria;
+        return $this->criteria;
     }
 
     public function _buildQuery($operator, $criteria, $selector = null, $value = null)
@@ -297,11 +297,11 @@ class Criteria implements CriteriaInterface
             $criteria = $c;
         }
 
-        if (!isset($this->_criteria['$query'][$operator])) {
-            $this->_criteria['$query'][$operator] = [];
+        if (!isset($this->criteria['$query'][$operator])) {
+            $this->criteria['$query'][$operator] = [];
         }
 
-        $this->_criteria['$query'][$operator][] = $criteria['$query'];
+        $this->criteria['$query'][$operator][] = $criteria['$query'];
 
         return $this;
     }

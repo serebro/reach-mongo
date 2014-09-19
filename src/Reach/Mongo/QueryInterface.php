@@ -18,11 +18,11 @@ interface QueryInterface extends CriteriaInterface
      * @param bool  $as_array
      * @return null|DocumentInterface
      */
-    public function findOne(array $fields = [], $as_array = false);
+    public function one(array $fields = [], $as_array = false);
 
     /**
      * @param array $fields
      * @return ResultSetInterface
      */
-    public function find(array $fields = []);
+    public function all(array $fields = []);
 }

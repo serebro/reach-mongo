@@ -35,7 +35,7 @@ class QueryTest extends \PhactoryTestCase
         $explain = $query->explain();
         $this->assertArrayHasKey('nscannedObjects', $explain);
 
-        $resultSet = $query->find();
+        $resultSet = $query->all();
         $this->assertInstanceOf('\Reach\Mongo\ResultSet', $resultSet);
 
         $result = $resultSet->limit(2)->asArray();
@@ -43,7 +43,7 @@ class QueryTest extends \PhactoryTestCase
         $this->assertEquals('Title3', $result[0]->title);
         $this->assertEquals('Title2', $result[1]->title);
 
-        $doc = $query->title1()->findOne();
+        $doc = $query->title1()->one();
         $this->assertInstanceOf('\Model\Mongo\TestSchema', $doc);
         $this->assertEquals('Title1', $doc->title);
     }
