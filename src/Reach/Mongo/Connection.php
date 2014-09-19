@@ -42,9 +42,8 @@ class Connection
      *                       'database' => '',
      *                       'options' => array()
      *                       )
-     * @param string $connection_name
      */
-    public function __construct(array $config, $connection_name = '')
+    public function __construct(array $config)
     {
         if (empty($config['connection_attempts'])) {
             $config['connection_attempts'] = $this->_default_connection_attempts;
