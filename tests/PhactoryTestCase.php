@@ -31,8 +31,10 @@ abstract class PhactoryTestCase extends \PHPUnit_Framework_TestCase
             'options'  => ['connect' => true, 'socketTimeoutMS' => 60000]
         ];
 
-        ConnectionManager::registerConnection(self::$config);
-        self::$connection = ConnectionManager::getConnection();
+        \Reach\Service\Container::register('mongo', self::$config, '\Reach\Mongo\Connection');
+        self::$connection = \Reach\Service\Container::get('mongo');
+        //ConnectionManager::registerConnection(self::$config);
+        //self::$connection = ConnectionManager::getConnection();
 
         if (!self::$phactory) {
             if (!self::$connection->getDb() instanceof \MongoDB) {

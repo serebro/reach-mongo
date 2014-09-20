@@ -7,7 +7,7 @@ use MongoDate;
 class Cache extends \Reach\Cache
 {
 
-    public $connection_name = 'default';
+    public $connection_name = 'mongo';
 
     public $collection_name = 'cache';
 
@@ -36,7 +36,7 @@ class Cache extends \Reach\Cache
      */
     protected function getConnection()
     {
-        return ConnectionManager::getConnection($this->connection_name);
+        return \Reach\Service\Container::get($this->connection_name);
     }
 
     /**

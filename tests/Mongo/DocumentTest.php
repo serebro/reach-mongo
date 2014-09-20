@@ -303,9 +303,8 @@ class DocumentTest extends \PhactoryTestCase
         $this->assertInstanceOf('\Model\Mongo\TestSchema', $model);
         $this->assertEquals('123', $model->title);
 
-        //ConnectionManager::closeConnection(); // todo
-        ConnectionManager::getConnection('another')->selectDB('reach_testing2')->drop();
-        ConnectionManager::closeConnection('another');
+        \Reach\Service\Container::get('another')->selectDB('reach_testing2')->drop();
+        \Reach\Service\Container::get('another')->close();
     }
 
     public function testGetStringId()

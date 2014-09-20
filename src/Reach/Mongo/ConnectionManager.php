@@ -11,7 +11,7 @@ use Exception;
 class ConnectionManager
 {
 
-    public static $default_connection_name = 'default';
+    public static $default_connection_name = 'mongo';
 
     private static $_connections_config = [];
 

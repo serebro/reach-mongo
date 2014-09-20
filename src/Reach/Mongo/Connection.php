@@ -13,6 +13,8 @@ class Connection
 
     use EventableTrait;
 
+    public static $default_connection_name = 'mongo';
+
     /** @var array */
     private $_config;
 

@@ -27,12 +27,12 @@ class ConnectionManagerTest extends \PHPUnit_Framework_TestCase
         $config2 = [
             'database' => 'reach_testing2',
         ];
-        ConnectionManager::registerConnection($config2, 'another');
-        $connection2 = ConnectionManager::getConnection('another');
+        \Reach\Service\Container::register('another', $config2, '\Reach\Mongo\Connection');
+        $connection2 = \Reach\Service\Container::get('another');
         $this->assertInstanceOf('\Reach\Mongo\Connection', $connection2);
         $this->assertEquals('reach_testing2', $connection2->getDbName());
 
-        $this->assertInstanceOf('\Reach\Mongo\Connection', ConnectionManager::getConnection('default'));
+        $this->assertInstanceOf('\Reach\Mongo\Connection', \Reach\Service\Container::get('mongo'));
         $this->assertEquals('reach_testing', $connection->getDbName());
     }
 }

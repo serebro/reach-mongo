@@ -48,7 +48,8 @@ trait CollectionTrait
      */
     public static function getConnection($connection_name = null)
     {
-        return ConnectionManager::getConnection($connection_name);
+        $connection_name = $connection_name ?: \Reach\Mongo\Connection::$default_connection_name;
+        return \Reach\Service\Container::get($connection_name);
     }
 
     /**

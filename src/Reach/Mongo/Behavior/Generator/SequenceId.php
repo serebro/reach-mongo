@@ -4,7 +4,6 @@ namespace Reach\Mongo\Behavior\Generator;
 
 use Reach\Behavior;
 use Reach\Event;
-use Reach\Mongo\ConnectionManager;
 
 class SequenceId extends Behavior
 {
@@ -40,7 +39,7 @@ class SequenceId extends Behavior
     {
         $collection_name = $this->owner->getCollectionName();
         $connection_name = $this->owner->getConnectionName();
-        $collection = ConnectionManager::getConnection($connection_name)->getCollection($this->collection_name);
+        $collection = \Reach\Service\Container::get($connection_name)->getCollection($this->collection_name);
         $result = $collection->findAndModify(
             ['_id' => $collection_name],
             ['$inc' => ['sequence' => 1]],

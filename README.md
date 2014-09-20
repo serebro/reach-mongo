@@ -36,7 +36,7 @@ Installation
 ```JSON
 {
     "require": {
-        "serebro/reach": "dev-master"
+        "serebro/reach-mongo": "dev-master"
     }
 }
 ```
@@ -245,6 +245,7 @@ Connecting
 ---
 ```php
 $config = [
+	'class'    => '\Reach\Mongo\Connection'
 	'database' => 'testing',
 	'host'     => 'localhost',
 	'port'     => 27017,
@@ -255,12 +256,12 @@ $config = [
 	'connection_timeout'  = 1, // seconds
 ];
 
-\Reach\Mongo\ConnectionManager::registerConnection($config);
+\Reach\Service\Container::register('mongo', $config);
 ```
 
 **Getting instance of connection**
 ```php
-$connection = \Reach\Mongo\ConnectionManager::getConnection();
+$connection = \Reach\Service\Container::get('mongo');
 $db_name = $connection->getDbName();
 
 // Getting instance of native MongoDB class
@@ -270,8 +271,8 @@ $clientMongoCollection = $connection->getMongoCollection('client');
 **Connecting to another database**
 ```php
 $connection_name = 'logs';
-\Reach\Mongo\ConnectionManager::registerConnection($logs_config, $connection_name);
-$logsСonnection = \Reach\Mongo\ConnectionManager::getConnection($connection_name);
+\Reach\Service\Container::register($connection_name, $logs_config);
+$logsСonnection = \Reach\Service\Container::get($connection_name);
 
 // Getting document from another connection
 $client = Client::getCollection($connection_name)->findOne($id);
