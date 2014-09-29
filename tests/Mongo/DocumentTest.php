@@ -113,8 +113,12 @@ class DocumentTest extends \PhactoryTestCase
         $id = new MongoId();
         $model = new TestSchema(['_id' => $id, 'title' => 'TitleLoad']);
         $model->save();
-        unset($model);
 
+        $model = new TestSchema(['_id' => $id]);
+        $this->assertTrue($model->load());
+        $this->assertEquals('TitleLoad', $model->title);
+
+        TestSchema::getCollection()->clearIdentityMap();
         $model = new TestSchema(['_id' => $id]);
         $this->assertTrue($model->load());
         $this->assertEquals('TitleLoad', $model->title);
