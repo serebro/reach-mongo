@@ -126,6 +126,7 @@ class DocumentTest extends \PhactoryTestCase
         $model = new TestSchema(['_id' => new MongoId()]);
         $this->assertFalse($model->load());
 
+        // To test exception
         $model = new TestSchema();
         $model->load();
     }
