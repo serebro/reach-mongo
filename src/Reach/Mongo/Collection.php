@@ -114,7 +114,11 @@ class Collection extends BaseCollection
         if (count($query) === 1 && array_key_exists($pk, $query)) {
             $id = $query[$pk];
             if ($model = $this->getIdentityMap($id)) {
-                return $model;
+                if ($as_array) {
+                    return $model->getAttributes();
+                } else {
+                    return $model;
+                }
             }
         }
 

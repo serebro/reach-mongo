@@ -139,6 +139,24 @@ trait DocumentTrait
     }
 
     /**
+     * Loading the model from DB by attribute "_id"
+     * @return bool
+     * @throws \Exception
+     */
+    public function load()
+    {
+        if (empty($this->_id)) {
+            throw new \Exception('Attribute "_id" was not defined.');
+        }
+
+        if (!$document = static::findOne(['_id' => $this->_id], [], true)) {
+            return false;
+        }
+
+        return $this->setAttributes($document);
+    }
+
+    /**
      * @param array $options
      * @return bool
      */

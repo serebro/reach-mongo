@@ -83,7 +83,7 @@ trait CollectionTrait
     /**
      * @param array $query
      * @param array $fields
-     * @return MongoCursor|\Reach\ResultSet
+     * @return MongoCursor|\Reach\Mongo\ResultSet
      */
     public static function find($query = [], array $fields = [])
     {
@@ -94,7 +94,7 @@ trait CollectionTrait
      * @param array|string|MongoId $query
      * @param array                $fields
      * @param bool                 $as_array
-     * @return null|self
+     * @return null|DocumentInterface
      */
     public static function findOne($query = [], array $fields = [], $as_array = false)
     {

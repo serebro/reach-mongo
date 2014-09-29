@@ -5,7 +5,6 @@ namespace Mongo;
 use Model\Mongo\TestSchema;
 use MongoId;
 use Reach\Mongo\Collection;
-use Reach\Mongo\ConnectionManager;
 
 class DocumentTest extends \PhactoryTestCase
 {
@@ -103,6 +102,28 @@ class DocumentTest extends \PhactoryTestCase
             [$mongoId1, $mongoId2],
             Collection::ensureMongoId([(string)$mongoId1, (string)$mongoId2])
         );
+    }
+
+    /**
+     * @expectedException        \Exception
+     * @expectedExceptionMessage Attribute "_id" was not defined.
+     */
+    public function testLoad()
+    {
+        $id = new MongoId();
+        $model = new TestSchema(['_id' => $id, 'title' => 'TitleLoad']);
+        $model->save();
+        unset($model);
+
+        $model = new TestSchema(['_id' => $id]);
+        $this->assertTrue($model->load());
+        $this->assertEquals('TitleLoad', $model->title);
+
+        $model = new TestSchema(['_id' => new MongoId()]);
+        $this->assertFalse($model->load());
+
+        $model = new TestSchema();
+        $model->load();
     }
 
     public function testGetConnection()
