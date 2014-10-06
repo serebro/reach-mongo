@@ -1,10 +1,10 @@
 Reach - PHP MongoDB ODM
 ===
 
-[![Total Downloads](http://img.shields.io/packagist/dt/serebro/Reach.svg?style=flat)](https://packagist.org/packages/serebro/Reach)
+[![Total Downloads](http://img.shields.io/packagist/dt/serebro/reach-mongo.svg?style=flat)](https://packagist.org/packages/serebro/reach-mongo)
 [![Build Status](http://img.shields.io/travis/serebro/Reach.svg?style=flat)](https://travis-ci.org/serebro/Reach)
 [![Code Coverage](http://img.shields.io/coveralls/serebro/Reach.svg?style=flat)](https://coveralls.io/r/serebro/Reach)
-[![License](http://img.shields.io/packagist/l/serebro/Reach.svg?style=flat)](https://packagist.org/packages/serebro/Reach)
+[![License](http://img.shields.io/packagist/l/serebro/reach-mongo.svg?style=flat)](https://packagist.org/packages/serebro/reach-mongo)
 
 
 Requirements
@@ -22,7 +22,7 @@ The key feature list:
 - Support for partial loading of documents from DB
 - **Unit of work (Reduce the number of database requests/updates. Prevent redundant requests and multiple updates to the same document)**
 - References and embeds
-- Events (system:  `before_*()` ,  `after_*()` ; custom:  `on()` ,  `off()` ,  `trigger()` )
+- Events (system:  `before*()` ,  `after*()` ; custom:  `on()` ,  `off()` ,  `trigger()` )
 - Query builder
 - Extensions: Reach can be customized infinitely with behaviours.
 - Creating an auto-incrementing sequence field
@@ -361,9 +361,9 @@ $page->items; // \Reach\Mongo\ResultSet
 
 Benchmarking
 ---
-- [Reach](https://github.com/serebro/Reach/blob/master/tests/Mongo/Benchmarks/ReachResults.md)
-- [Phalcon ODM](https://github.com/serebro/Reach/blob/master/tests/Mongo/Benchmarks/PhalconResults.md)
-- [Source code](https://github.com/serebro/Reach/tree/master/tests/Mongo/Benchmarks)
+- [Reach](https://github.com/serebro/reach-mongo/blob/master/tests/Mongo/Benchmarks/ReachResults.md)
+- [Phalcon ODM](https://github.com/serebro/reach-mongo/blob/master/tests/Mongo/Benchmarks/PhalconResults.md)
+- [Source code](https://github.com/serebro/reach-mongo/tree/master/tests/Mongo/Benchmarks)
 
 
 Roadmap
