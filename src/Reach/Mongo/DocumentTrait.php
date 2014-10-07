@@ -42,13 +42,13 @@ trait DocumentTrait
         return new Query($criteria, get_called_class());
     }
 
-    public static function date($time = 'now')
+    public static function date($time = 'now', $format = DATE_ISO8601)
     {
         if (is_int($time)) {
             $time = "@$time";
         }
         $time = new DateTime($time, new DateTimeZone('UTC'));
-        return $time->format(DATE_ISO8601);
+        return $time->format($format);
     }
 
     public function __call($name, $arguments)
