@@ -108,7 +108,7 @@ Client::deleteAll(['status' => Client::STATUS_INACTIVE]);
 Create your model
 ---
 ```php
-class Client extents \Reach\Mongo\Document
+class Client extends \Reach\Mongo\Document
 {
 	const STATUS_INACTIVE = 0;
 	const STATUS_ACTIVE = 1;
