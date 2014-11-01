@@ -2,8 +2,8 @@ Reach - PHP MongoDB ODM
 ===
 
 [![Total Downloads](http://img.shields.io/packagist/dt/serebro/reach-mongo.svg?style=flat)](https://packagist.org/packages/serebro/reach-mongo)
-[![Build Status](http://img.shields.io/travis/serebro/Reach.svg?style=flat)](https://travis-ci.org/serebro/Reach)
-[![Code Coverage](http://img.shields.io/coveralls/serebro/Reach.svg?style=flat)](https://coveralls.io/r/serebro/Reach)
+[![Build Status](http://img.shields.io/travis/serebro/reach-mongo.svg?style=flat)](https://travis-ci.org/serebro/reach-mongo)
+[![Code Coverage](http://img.shields.io/coveralls/serebro/reach-mongo.svg?style=flat)](https://coveralls.io/r/serebro/reach-mongo)
 [![License](http://img.shields.io/packagist/l/serebro/reach-mongo.svg?style=flat)](https://packagist.org/packages/serebro/reach-mongo)
 
 
