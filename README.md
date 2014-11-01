@@ -110,6 +110,8 @@ Client::deleteAll(['status' => Client::STATUS_INACTIVE]);
 Create your model
 ---
 ```php
+<?php
+
 class Client extends \Reach\Mongo\Document
 {
 	const STATUS_INACTIVE = 0;
@@ -184,6 +186,8 @@ Query Builder
 ---
 
 ```php
+<?php
+
 $criteria1 = new \Reach\Mongo\Criteria();
 $criteria1->addOr(['status' => Client::STATUS_INACTIVE]);
 $criteria1->addOr('created', '<', new \MongoDate());
@@ -215,6 +219,8 @@ Two steps are required to define a scope.
 
 **First** create a custom query class for your model and define the needed scope methods in this class.
 ```php
+<?php 
+
 class ClientQuery extends \Reach\Mongo\Query
 {
 	public function active($status = Client::STATUS_ACTIVE)
@@ -227,6 +233,8 @@ class ClientQuery extends \Reach\Mongo\Query
 
 **Second**, override \Reach\Mongo\Document::query() to use the custom query class instead of the regular.
 ```php
+<?php
+
 class Client extends \Reach\Mongo\Document
 {
     public static function query(CriteriaInterface $criteria = null)
@@ -238,6 +246,8 @@ class Client extends \Reach\Mongo\Document
 
 **Using**
 ```php
+<?php
+
 $activeClients = Client::query()->active()->find();
 $inactiveClients = Client::query()->active(false)->find();
 ```
@@ -246,6 +256,8 @@ $inactiveClients = Client::query()->active(false)->find();
 Connecting
 ---
 ```php
+<?php
+
 $config = [
 	'class'    => '\Reach\Mongo\Connection'
 	'database' => 'testing',
@@ -263,6 +275,8 @@ $config = [
 
 **Getting instance of connection**
 ```php
+<?php
+
 $connection = \Reach\Service\Container::get('mongo');
 $db_name = $connection->getDbName();
 
@@ -272,6 +286,8 @@ $clientMongoCollection = $connection->getMongoCollection('client');
 
 **Connecting to another database**
 ```php
+<?php
+
 $connection_name = 'logs';
 \Reach\Service\Container::register($connection_name, $logs_config);
 $logsСonnection = \Reach\Service\Container::get($connection_name);
@@ -285,6 +301,8 @@ Unit of work
 ---
 
 ```php
+<?php
+
 \Reach\Mongo\Buffer::open();
 $client = new Client(['_id' => 1, 'name' => 'Yandex']);
 $client->save();
@@ -298,6 +316,8 @@ $client->save();
 Events
 ---
 ```php
+<?php
+
 $client = new Client();
 $func1 = function($event){ echo 'fn #1 '; };
 $func2 = function($event){ echo 'fn #2'; };
@@ -324,6 +344,8 @@ $client->trigger('add_new_partner'); // fn #1 fn #2
 Caching with MongoDB
 ---
 ```php
+<?php
+
 $cache = new \Reach\Mongo\Cache();
 $ttl = 60; // seconds
 $cache->set('key', ['info' => 123], $ttl);
@@ -339,6 +361,8 @@ $cache->initCollection();
 Pagination
 ---
 ```php
+<?php
+
 $active = (int)$_GET['active']; // 1
 $limit = (int)$_GET['limit']; // 10
 $current_page = (int)$_GET['current']; // 2
