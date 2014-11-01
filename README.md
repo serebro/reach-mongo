@@ -46,6 +46,8 @@ Basic usage
 ---
 
 ```php
+<?php
+
 // Create model
 $client = new Client();
 $client->name = 'Google';
