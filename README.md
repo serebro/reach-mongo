@@ -11,7 +11,7 @@ Requirements
 ---
 
 - PHP >= 5.4;
-- ext-mongo >= 1.4
+- ext-mongo >= 1.5
 
 The key feature list:
 ---
