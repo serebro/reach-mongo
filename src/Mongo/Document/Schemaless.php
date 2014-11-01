@@ -141,7 +141,6 @@ class Schemaless implements DocumentInterface
         }
 
         $values['_id'] = $this->_id;
-        //$values = $this->getSerializedAttributes();
         $connection_name = $this->getConnectionName();
         if (!static::getCollection($connection_name)->insert($values, $options) !== false) {
             return false;

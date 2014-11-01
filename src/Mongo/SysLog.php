@@ -50,7 +50,6 @@ class SysLog extends MongoLog
             case MongoLog::FINE:
                 return "FINE";
             default:
-                var_dump($level);
                 return "UNKNOWN";
         }
     }

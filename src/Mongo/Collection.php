@@ -38,6 +38,9 @@ use Reach\ResultSetInterface;
 class Collection extends BaseCollection
 {
 
+    /** @var string */
+    protected $hydrate_class;
+
     /** @var MongoCollection */
     private $_mongoCollection;
 
@@ -50,8 +53,8 @@ class Collection extends BaseCollection
 
     public function __construct(MongoCollection $mongoCollection, Connection $connection, $hydrate_class = '\stdClass')
     {
+        $this->hydrate_class = $hydrate_class;
         $this->_mongoCollection = $mongoCollection;
-        $this->_hydrate_class = $hydrate_class;
         $this->_connection = $connection;
     }
 
@@ -88,7 +91,7 @@ class Collection extends BaseCollection
             return $cursor;
         }
 
-        $class = $this->_hydrate_class;
+        $class = $this->hydrate_class;
         if (in_array('resultSet', get_class_methods($class))) {
             return $class::resultSet($cursor);
         }
@@ -105,7 +108,7 @@ class Collection extends BaseCollection
      */
     public function findOne($query = null, array $fields = [], $as_array = false)
     {
-        $class = $this->_hydrate_class;
+        $class = $this->hydrate_class;
         $pk = $class::getPrimaryKey();
 
         $query = Criteria::normalize($query, $pk);
@@ -128,6 +131,7 @@ class Collection extends BaseCollection
                 return $document;
             }
 
+            /** @var DocumentInterface $model */
             $model = $class::instantiate($document);
             $model->setIsNew(false);
             $model->afterFind($document);
@@ -156,7 +160,7 @@ class Collection extends BaseCollection
         $options = []
     ) {
         $command = [
-            'text'     => $this->_hydrate_class,
+            'text'     => $this->hydrate_class,
             'search'   => $text,
             'filter'   => $filter,
             'project'  => $fields,
@@ -183,7 +187,7 @@ class Collection extends BaseCollection
         $command = array_merge(
             $command,
             [
-                'mapreduce' => $this->_hydrate_class,
+                'mapreduce' => $this->hydrate_class,
                 'map'       => is_string($map) ? new MongoCode($map) : $map,
                 'reduce'    => is_string($reduce) ? new MongoCode($reduce) : $reduce,
                 'out'       => $out,

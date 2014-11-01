@@ -7,6 +7,7 @@ use MongoCursor;
 use MongoDBRef;
 use MongoId;
 use Reach\Mongo\Document\Schema;
+use Reach\Service\Container;
 
 trait CollectionTrait
 {
@@ -49,7 +50,7 @@ trait CollectionTrait
     public static function getConnection($connection_name = null)
     {
         $connection_name = $connection_name ?: \Reach\Mongo\Connection::$default_connection_name;
-        return \Reach\Service\Container::get($connection_name);
+        return Container::get($connection_name);
     }
 
     /**

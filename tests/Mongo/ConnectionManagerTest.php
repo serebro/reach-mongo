@@ -3,6 +3,7 @@
 namespace Mongo;
 
 use Reach\Mongo\ConnectionManager;
+use Reach\Service\Container;
 
 class ConnectionManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,12 +28,12 @@ class ConnectionManagerTest extends \PHPUnit_Framework_TestCase
         $config2 = [
             'database' => 'reach_testing2',
         ];
-        \Reach\Service\Container::register('another', $config2, '\Reach\Mongo\Connection');
-        $connection2 = \Reach\Service\Container::get('another');
+        Container::register('another', $config2, '\Reach\Mongo\Connection');
+        $connection2 = Container::get('another');
         $this->assertInstanceOf('\Reach\Mongo\Connection', $connection2);
         $this->assertEquals('reach_testing2', $connection2->getDbName());
 
-        $this->assertInstanceOf('\Reach\Mongo\Connection', \Reach\Service\Container::get('mongo'));
+        $this->assertInstanceOf('\Reach\Mongo\Connection', Container::get('mongo'));
         $this->assertEquals('reach_testing', $connection->getDbName());
     }
 }

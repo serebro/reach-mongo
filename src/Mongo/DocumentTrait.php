@@ -4,9 +4,11 @@ namespace Reach\Mongo;
 
 use DateTime;
 use DateTimeZone;
+use Exception;
 use MongoCursor;
 use MongoDate;
 use MongoId;
+use Reach\Mongo\Document\Schema;
 use stdClass;
 use Traversable;
 
@@ -74,7 +76,7 @@ trait DocumentTrait
             return $this->__set(lcfirst(substr($name, 3)), $arguments[0]);
         }
 
-        throw new \Exception('Document has no method "' . $name . '"');
+        throw new Exception('Document has no method "' . $name . '"');
     }
 
     public function init()
@@ -130,7 +132,7 @@ trait DocumentTrait
 
     /**
      * @param $connection_name
-     * @return \Reach\Mongo\Document\Schema
+     * @return Schema
      */
     public function setConnectionName($connection_name)
     {
@@ -141,12 +143,12 @@ trait DocumentTrait
     /**
      * Loading the model from DB by attribute "_id"
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function load()
     {
         if (empty($this->_id)) {
-            throw new \Exception('Attribute "_id" was not defined.');
+            throw new Exception('Attribute "_id" was not defined.');
         }
 
         if (!$document = static::findOne(['_id' => $this->_id], [], true)) {
@@ -226,7 +228,7 @@ trait DocumentTrait
                 $val = (string)$val;
             } else if ($val instanceof MongoDate) {
                 $val = $val->sec;
-            } else if ($val instanceof \Reach\Mongo\Document\Schema) {
+            } else if ($val instanceof Schema) {
                 $val = $val->toArray();
             } else if (is_array($val) || $val instanceof stdClass) {
                 $val = self::deepToArray($val);

@@ -2,8 +2,10 @@
 
 namespace Reach\Mongo\Behavior\Generator;
 
+use Exception;
 use Reach\Behavior;
 use Reach\Event;
+use Reach\Service\Container;
 
 class SequenceId extends Behavior
 {
@@ -22,7 +24,7 @@ class SequenceId extends Behavior
     /**
      * @param Event $event
      * @return null|int
-     * @throws \Exception
+     * @throws Exception
      */
     public function beforeInsert(Event $event)
     {
@@ -39,7 +41,7 @@ class SequenceId extends Behavior
     {
         $collection_name = $this->owner->getCollectionName();
         $connection_name = $this->owner->getConnectionName();
-        $collection = \Reach\Service\Container::get($connection_name)->getCollection($this->collection_name);
+        $collection = Container::get($connection_name)->getCollection($this->collection_name);
         $result = $collection->findAndModify(
             ['_id' => $collection_name],
             ['$inc' => ['sequence' => 1]],
@@ -48,7 +50,7 @@ class SequenceId extends Behavior
         );
 
         if (empty($result)) {
-            throw new \Exception('Unknown error'); // todo
+            throw new Exception('Unknown error'); // todo
         }
 
         return $result['sequence'];

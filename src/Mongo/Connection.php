@@ -2,8 +2,10 @@
 
 namespace Reach\Mongo;
 
+use Exception;
 use MongoClient;
 use MongoCollection;
+use MongoConnectionException;
 use MongoDB;
 use MongoGridFS;
 use Reach\EventableTrait;
@@ -34,6 +36,7 @@ class Connection
 
     /** @var array */
     private $_log = [];
+
 
     /**
      * @param array  $config array(
@@ -103,7 +106,7 @@ class Connection
     /**
      * @param string $dsn
      * @param array  $options
-     * @throws \Exception
+     * @throws Exception
      * @return MongoClient
      */
     public function createConnection($dsn, array $options)
@@ -114,17 +117,17 @@ class Connection
         do {
             try {
                 $client = new MongoClient($dsn, $options);
-            } catch(\MongoConnectionException $exception) {
+            } catch(MongoConnectionException $exception) {
                 sleep($timeout);
-            } catch(\Exception $exception) {
+            } catch(Exception $exception) {
             }
         } while (!$client && --$attempts > 0);
 
         if ($client === null) {
             if (isset($exception)) {
-                throw new \Exception('Unable to connect to the database', $exception->getCode(), $exception);
+                throw new Exception('Unable to connect to the database', $exception->getCode(), $exception);
             } else {
-                $exception = new \Exception(
+                $exception = new Exception(
                     'Unable to connect to the database, after ' . $this->_config['connection_attempts'] . ' attempts'
                 );
             }

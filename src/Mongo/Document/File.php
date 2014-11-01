@@ -12,6 +12,7 @@ use Reach\Mongo\Collection;
 use Reach\Mongo\CollectionTrait;
 use Reach\Mongo\Connection;
 use Reach\Mongo\ConnectionManager;
+use Reach\Mongo\Criteria;
 use Reach\Mongo\DocumentInterface;
 use Reach\Mongo\DocumentTrait;
 use Reach\Mongo\ResultSet;
@@ -57,7 +58,8 @@ class File extends Model implements DocumentInterface
 
     public static function findOne($query = [], array $fields = [], $as_array = false)
     {
-        $query = Collection::normalizeQueryId($query);
+        $pk = static::getPrimaryKey();
+        $query = Criteria::normalize($query, $pk);
         $gridFSFile = static::getCollection()->findOne($query, $fields);
         $model = static::instantiate($gridFSFile->file);
         $model->gridFSFile = $gridFSFile;

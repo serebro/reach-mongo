@@ -3,6 +3,7 @@
 namespace Reach\Mongo;
 
 use MongoDate;
+use Reach\Service\Container;
 
 class Cache extends \Reach\Cache
 {
@@ -36,7 +37,7 @@ class Cache extends \Reach\Cache
      */
     protected function getConnection()
     {
-        return \Reach\Service\Container::get($this->connection_name);
+        return Container::get($this->connection_name);
     }
 
     /**

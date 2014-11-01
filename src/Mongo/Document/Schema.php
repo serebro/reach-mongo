@@ -55,34 +55,6 @@ abstract class Schema extends Embedded
     }
 
     /**
-     * @param string $property
-     * @return Schema|null
-     */
-    public function getDBRefModel($property)
-    {
-        if (!isset($this->$property)) {
-            return null;
-        }
-
-        if (!$document = static::getDBRef($this->$property)) {
-            return null;
-        }
-
-        if (isset(static::$relations[$property]['class']) && class_exists(static::$relations[$property]['class'])) {
-            $class = static::$relations[$property]['class'];
-        } else {
-            return null;
-        }
-
-        /** @var self $model */
-        $model = $class::instantiate($document);
-        $model->setIsNew(false);
-        $model->afterFind();
-
-        return $model;
-    }
-
-    /**
      * @param null $document
      * @return Schema|null
      */
@@ -99,38 +71,6 @@ abstract class Schema extends Embedded
     {
         $this->_saved = $document ?: $this->getRawDocument();
     }
-
-    ///**
-    // * @param Schema $model
-    // * @param array    $query
-    // * @param array    $fields
-    // * @return MongoCursor|ResultSetInterface
-    // */
-    //public static function findAllBy(Schema $model, array $query = [], array $fields = [])
-    //{
-    //    $results = new ResultSet();
-    //    $class = get_called_class();
-    //    if (!$class::$relations) {
-    //        return $results;
-    //    }
-    //
-    //    $model_class = get_class($model);
-    //
-    //    $property = null;
-    //    foreach ($class::$relations as $key => $options) {
-    //        if (trim($options['model'], '\\') == trim($model_class, '\\') && $options['rel'] == Relation::DBREF) {
-    //            $property = $key;
-    //            break;
-    //        }
-    //    }
-    //
-    //    if (!$property) {
-    //        return $results;
-    //    }
-    //
-    //    $query = array_merge($query, ["$property.\$id" => $model->id]);
-    //    return static::find($query, $fields);
-    //}
 
     /**
      * Drop all data and ensure indexes
