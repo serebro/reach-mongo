@@ -22,7 +22,7 @@
 		"satooshi/php-coveralls": "dev-master"
 	},
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "Reach\\": "src"
         }
     }
