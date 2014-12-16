@@ -2,7 +2,9 @@
 
 namespace Reach\Mongo;
 
-interface RelatableInterface {
+use Reach\Mongo\Behavior\SerializableInterface;
+
+interface RelatableInterface extends SerializableInterface {
 
     /**
      * @return mixed

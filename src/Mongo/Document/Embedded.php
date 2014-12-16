@@ -4,6 +4,7 @@ namespace Reach\Mongo\Document;
 
 use Reach\Behavior;
 use Reach\Model;
+use Reach\Mongo\Behavior\SerializableInterface;
 use Reach\Mongo\DocumentInterface;
 use Reach\Mongo\EmbeddedDocumentInterface;
 use Reach\Mongo\RelatableInterface;
@@ -110,12 +111,16 @@ abstract class Embedded extends Model implements EmbeddedDocumentInterface, Docu
         $class = get_class($this);
         foreach ($this->_behaviors as $behavior) {
             /** @var Behavior $behavior */
-            if ($behavior instanceof RelatableInterface && (property_exists($class, $behavior->behavior_name))) {
-                $attribute = $behavior->behavior_name;
+            $attribute = $behavior->behavior_name;
+            if ($behavior instanceof SerializableInterface) {
                 unset($document[$attribute]);
-                /** @var \Reach\Mongo\RelatableInterface $behavior */
-                $key = $behavior->getKey($attribute);
-                $document[$key] = $behavior->make();
+
+                if (isset($behavior->key)) {
+                    /** @var \Reach\Mongo\RelatableInterface $behavior */
+                    $attribute = $behavior->getKey($attribute);
+                }
+
+                $document[$attribute] = $behavior->serialize();
             }
         }
 

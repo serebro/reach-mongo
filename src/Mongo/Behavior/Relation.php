@@ -9,6 +9,8 @@ use Reach\Mongo\RelatableInterface;
 abstract class Relation extends Behavior implements RelatableInterface
 {
 
+    use FieldTrait;
+
     const EMBED_ONE = '\Reach\Mongo\Behavior\Relation\EmbedOne';
     const EMBED_MANY = '\Reach\Mongo\Behavior\Relation\EmbedMany';
     const REF_PK = '\Reach\Mongo\Behavior\Relation\RefPk';
@@ -17,9 +19,6 @@ abstract class Relation extends Behavior implements RelatableInterface
 
     /** @var string */
     public $attr;
-
-    /** @var string */
-    public $key;
 
     /** @var string */
     public $ref;
@@ -40,7 +39,7 @@ abstract class Relation extends Behavior implements RelatableInterface
     {
         return [
             'beforeConstruct' => [$this, 'beforeConstruct'],
-            'afterFind'       => [$this, 'afterFind'],
+            'afterFind' => [$this, 'afterFind'],
         ];
     }
 
@@ -77,9 +76,13 @@ abstract class Relation extends Behavior implements RelatableInterface
         }
     }
 
-    public function getKey($default)
+    public function serialize()
     {
-        return empty($this->key) ? $default : $this->key;
+        return $this->make();
+    }
+
+    public function unserialize($serialized)
+    {
     }
 
     /**
