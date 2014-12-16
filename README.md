@@ -127,7 +127,9 @@ class Client extends \Reach\Mongo\Document
 	public $status = self::STATUS_INACTIVE;
 	public $name = '';
 	public $balance = 0;
-	public $description = '';
+	
+	/** @var \Reach\Mongo\Behavior\LangText */
+	public $description;
 
 	/** @var \City */
 	public $city;
@@ -150,6 +152,8 @@ class Client extends \Reach\Mongo\Document
 
             'city'     => ['class' => Relation::REF_PK,   'ref' => '\City',   'key' => 'city_id'],
             'partners' => ['class' => Relation::REF_MANY, 'ref' => '\Partner'],
+            
+            'description' => ['class' => '\Reach\Mongo\Behavior\LangText'],
         ];
     }
 
