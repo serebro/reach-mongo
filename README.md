@@ -270,8 +270,8 @@ $config = [
 	'username' => 'root', // or null
 	'password' => 'wut5oot5fo1hec', // or null
 	'options'  => ['connect' => true, 'socketTimeoutMS' => 60000],
-	'connection_attempts' = 3,
-	'connection_timeout'  = 1, // seconds
+	'connection_attempts' => 3,
+	'connection_timeout'  => 1, // seconds
 ];
 
 \Reach\Service\Container::register('mongo', $config);
