@@ -32,7 +32,7 @@ abstract class PhactoryTestCase extends \PHPUnit_Framework_TestCase
         ];
 
         \Reach\Service\Container::register('mongo', self::$config, '\Reach\Mongo\Connection');
-        self::$connection = \Reach\Service\Container::get('mongo');
+        self::$connection = \Reach\Service\Container::getDI()->get('mongo');
         //ConnectionManager::registerConnection(self::$config);
         //self::$connection = ConnectionManager::getConnection();
 

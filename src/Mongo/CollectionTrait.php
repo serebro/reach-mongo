@@ -50,7 +50,7 @@ trait CollectionTrait
     public static function getConnection($connection_name = null)
     {
         $connection_name = $connection_name ?: \Reach\Mongo\Connection::$default_connection_name;
-        return Container::get($connection_name);
+        return Container::getDI()->get($connection_name);
     }
 
     /**

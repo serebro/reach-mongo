@@ -37,7 +37,7 @@ class Cache extends \Reach\Cache
      */
     protected function getConnection()
     {
-        return Container::get($this->connection_name);
+        return Container::getDI()->get($this->connection_name);
     }
 
     /**
