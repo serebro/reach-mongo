@@ -3,6 +3,7 @@
 namespace Reach\Mongo;
 
 use Exception;
+use Reach\Service\Container;
 
 /**
  * Class ConnectionManager
@@ -21,12 +22,13 @@ class ConnectionManager
     /**
      * @param string $connection_name
      * @return Connection
+     * @throws Exception
      */
     public static function getConnection($connection_name = null)
     {
         $connection_name = empty($connection_name) ? self::$default_connection_name : $connection_name;
         if (!array_key_exists($connection_name, self::$_connections)) {
-            self::$_connections[$connection_name] = new Connection(self::$_connections_config[$connection_name]);
+            self::$_connections[$connection_name] = Container::getDI()->get($connection_name);
         }
         return self::$_connections[$connection_name];
     }
@@ -87,7 +89,11 @@ class ConnectionManager
         if (!isset($config['option'])) {
             $config['option'] = [];
         }
-        self::$_connections_config[$connection_name] = $config;
+
+        /** @var \Reach\DI\DefaultAdapter $di */
+        $di = Container::getDI();
+        $di->register($connection_name, $config, '\Reach\Mongo\Connection');
+
         if (array_key_exists($connection_name, self::$_connections)) {
             unset(self::$_connections[$connection_name]);
         }

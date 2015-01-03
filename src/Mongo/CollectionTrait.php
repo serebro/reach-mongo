@@ -7,7 +7,6 @@ use MongoCursor;
 use MongoDBRef;
 use MongoId;
 use Reach\Mongo\Document\Schema;
-use Reach\Service\Container;
 
 trait CollectionTrait
 {
@@ -37,6 +36,7 @@ trait CollectionTrait
     {
         if (!$connection = static::getConnection($connection_name)) {
             trigger_error(__METHOD__ . " Connection $connection_name is not registered.");
+
             return null;
         }
 
@@ -49,8 +49,9 @@ trait CollectionTrait
      */
     public static function getConnection($connection_name = null)
     {
-        $connection_name = $connection_name ?: \Reach\Mongo\Connection::$default_connection_name;
-        return Container::getDI()->get($connection_name);
+        $connection_name = $connection_name ?: Connection::$default_connection_name;
+
+        return ConnectionManager::getConnection($connection_name);
     }
 
     /**

@@ -39,7 +39,7 @@ class Connection
 
 
     /**
-     * @param array  $config array(
+     * @param array $config  array(
      *                       'host' => 'localhost',
      *                       'port' => '27017',
      *                       'username' => '',
@@ -127,9 +127,7 @@ class Connection
             if (isset($exception)) {
                 throw new Exception('Unable to connect to the database', $exception->getCode(), $exception);
             } else {
-                $exception = new Exception(
-                    'Unable to connect to the database, after ' . $this->_config['connection_attempts'] . ' attempts'
-                );
+                $exception = new Exception('Unable to connect to the database, after ' . $this->_config['connection_attempts'] . ' attempts');
             }
 
             throw $exception;
@@ -289,24 +287,20 @@ class Connection
         $log = [];
         foreach (iterator_to_array($cursor) as $frame) {
             if (!preg_match('/\.system\..+$/', $frame['ns'])) {
-                $query = (empty($frame['query']) ? '' : json_encode(
-                        $frame['query']
-                    )) . (empty($frame['command']) ? '' : json_encode($frame['command']));
+                $query = (empty($frame['query']) ? '' : json_encode($frame['query'])) . (empty($frame['command']) ? '' : json_encode($frame['command']));
                 switch ($mode) {
                     case 1:
                         $log[] = [
-                            'ts'    => $frame['ts']->sec,
+                            'ts' => $frame['ts']->sec,
                             'mills' => $frame['millis'],
-                            'ns'    => $frame['ns'],
-                            'op'    => $frame['op'],
-                            'q'     => $query
+                            'ns' => $frame['ns'],
+                            'op' => $frame['op'],
+                            'q' => $query
                         ];
                         break;
                     case 2:
-                        $log[] = date('r', $frame['ts']->sec) . ' (' . sprintf(
-                                '%.1f',
-                                $frame['millis']
-                            ) . 'ms) ' . $frame['ns'] . ' [' . $frame['op'] . '] ' . $query . PHP_EOL;
+                        $log[] = date('r', $frame['ts']->sec) . ' (' . sprintf('%.1f',
+                                $frame['millis']) . 'ms) ' . $frame['ns'] . ' [' . $frame['op'] . '] ' . $query . PHP_EOL;
                         break;
                     default:
                         $log[] = $frame;
