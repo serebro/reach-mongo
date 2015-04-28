@@ -61,7 +61,7 @@ class FormatMongoDate extends Behavior
             $this->attribute = $this->behavior_name;
         }
 
-        if (!isset($this->owner->{$this->sourceAttribute})) {
+        if (!property_exists(get_class($this->owner), $this->sourceAttribute)) {
             throw new \Exception(
                 'This property "' . $this->sourceAttribute . '" does not exist in this model "' . get_class(
                     $this->owner

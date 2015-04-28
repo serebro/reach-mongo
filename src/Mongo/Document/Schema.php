@@ -117,10 +117,6 @@ abstract class Schema extends Embedded
 
     public function setAttributes($values)
     {
-        if (!$this->isValid($values)) {
-            return false;
-        }
-
         parent::setAttributes($values);
         return true;
     }
@@ -131,7 +127,7 @@ abstract class Schema extends Embedded
      * @param string $scenario
      * @return bool
      */
-    public function isValid($values, $scenario = '')
+    public function isValid($scenario = '')
     {
         return true;
     }
