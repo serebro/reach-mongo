@@ -4,6 +4,7 @@ namespace Reach\Mongo\Behavior;
 
 use DateTime;
 use DateTimeZone;
+use InvalidArgumentException;
 use MongoDate;
 use Reach\Behavior;
 use Reach\Event;
@@ -47,7 +48,7 @@ class FormatMongoDate extends Behavior
         return [
             'afterFind'  => [$this, 'afterFind'],
             'afterSave'  => [$this, 'afterFind'],
-            'beforeSave' => [$this, 'beforeSave'],
+            'beforeSave' => [$this, 'beforeSave']
         ];
     }
 
@@ -62,7 +63,7 @@ class FormatMongoDate extends Behavior
         }
 
         if (!property_exists(get_class($this->owner), $this->sourceAttribute)) {
-            throw new \Exception(
+            throw new InvalidArgumentException(
                 'This property "' . $this->sourceAttribute . '" does not exist in this model "' . get_class(
                     $this->owner
                 ) . '"'
@@ -70,12 +71,16 @@ class FormatMongoDate extends Behavior
         }
 
         $this->_original_value = $this->owner->{$this->sourceAttribute};
-        $this->owner->{$this->attribute} = new DateTime('@' . $this->_original_value->sec, new DateTimeZone('UTC'));
+        if (empty($this->_original_value)) {
+            $this->owner->{$this->attribute} = new DateTime();
+        } else {
+            $this->owner->{$this->attribute} = new DateTime('@' . $this->_original_value->sec, new DateTimeZone('UTC'));
+        }
     }
 
     public function beforeSave(Event $event)
     {
-        if (!isset($this->owner->{$this->attribute})) {
+        if (!property_exists(get_class($this->owner), $this->sourceAttribute)) {
             return;
         }
 
