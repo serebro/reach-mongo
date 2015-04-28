@@ -40,6 +40,16 @@ Installation
     }
 }
 ```
+```php
+$config = [
+	'class'    => '\Reach\Mongo\Connection'
+	'database' => 'testing',
+	'host'     => 'localhost',
+	'port'     => 27017,
+];
+
+\Reach\Service\Container::register('mongo', $config);
+```
 
 
 Basic usage
