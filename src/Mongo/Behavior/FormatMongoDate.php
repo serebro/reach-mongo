@@ -71,11 +71,17 @@ class FormatMongoDate extends Behavior
         }
 
         $this->_original_value = $this->owner->{$this->sourceAttribute};
-        if (empty($this->_original_value)) {
-            $this->owner->{$this->attribute} = new DateTime();
+        if ($this->_original_value instanceof MongoDate) {
+            $timestamp = $this->_original_value->sec;
+        } else if (is_numeric($this->_original_value)) {
+            $timestamp = $this->_original_value;
+        } else if (is_string($this->_original_value)) {
+            $timestamp = strtotime($this->_original_value);
         } else {
-            $this->owner->{$this->attribute} = new DateTime('@' . $this->_original_value->sec, new DateTimeZone('UTC'));
+            $timestamp = time();
         }
+
+        $this->owner->{$this->attribute} = new DateTime('@' . $timestamp, new DateTimeZone('UTC'));
     }
 
     public function beforeSave(Event $event)
