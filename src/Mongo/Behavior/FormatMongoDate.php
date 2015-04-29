@@ -91,7 +91,7 @@ class FormatMongoDate extends Behavior
         }
 
         if ($this->attribute === null) {
-            $this->attribute = $this->behavior_name;
+            return;
         }
 
         if ($this->owner->{$this->attribute} instanceof MongoDate) {
