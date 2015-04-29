@@ -58,7 +58,7 @@ class FormatMongoDate extends Behavior
      */
     public function afterFind(Event $event)
     {
-        if (empty($this->attribute)) {
+        if ($this->attribute === null) {
             $this->attribute = $this->behavior_name;
         }
 
@@ -82,6 +82,10 @@ class FormatMongoDate extends Behavior
     {
         if (!property_exists(get_class($this->owner), $this->sourceAttribute)) {
             return;
+        }
+
+        if ($this->attribute === null) {
+            $this->attribute = $this->behavior_name;
         }
 
         if ($this->owner->{$this->attribute} instanceof MongoDate) {
