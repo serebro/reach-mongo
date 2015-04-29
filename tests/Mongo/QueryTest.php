@@ -32,9 +32,6 @@ class QueryTest extends \PhactoryTestCase
         $query = TestSchema::query($criteria2);
         $this->assertInstanceOf('\Model\Mongo\TestSchemaQuery', $query);
 
-        $explain = $query->explain();
-        $this->assertArrayHasKey('nscannedObjects', $explain);
-
         $resultSet = $query->all();
         $this->assertInstanceOf('\Reach\Mongo\ResultSet', $resultSet);
 

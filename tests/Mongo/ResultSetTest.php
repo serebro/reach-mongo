@@ -83,6 +83,7 @@ class ResultSetTest extends \PhactoryTestCase
         $this->assertInstanceOf('\MongoId', $array[0]);
         $this->assertEquals([$this->_ids[0], $this->_ids[1], $this->_ids[2]], $array);
 
+        //$resultSet = TestSchema::find()->sort(['title' => 1])->limit(3);
         $array = $resultSet->pluck('object.id');
         $this->assertInternalType('array', $array);
         $this->assertEquals([0, 1, 2], $array);

@@ -247,7 +247,6 @@ class DocumentTest extends \PhactoryTestCase
         // Schema::count
         $this->assertEquals(2, TestSchema::count(['object.a' => 2]));
         $this->assertEquals(0, TestSchema::count(['object.a' => 0]));
-        $this->assertEquals(5, TestSchema::count('123'));
     }
 
     public function testFormatDate()
