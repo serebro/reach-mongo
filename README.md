@@ -211,7 +211,7 @@ $criteria2->orderBy(['title' => -1]);
 $criteria2->add($criteria1);
 
 $query = TestSchema::query($criteria2);
-$resultSet = $query->find()->limit(2);
+$resultSet = $query->all()->limit(2);
 
 ```
 
@@ -227,6 +227,9 @@ $resultSet = $query->find()->limit(2);
 - `maxTimeMS()` - Specifies a cumulative time limit in milliseconds for processing operations on a cursor.
 - `max()` - Specifies an exclusive upper limit for the index to use in a query.
 - `min()` - Specifies an inclusive lower limit for the index to use in a query.
+- `all()` -
+- `one()` -
+- `asArray()` - 
 
 ### Scopes
 Two steps are required to define a scope.
