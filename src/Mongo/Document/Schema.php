@@ -123,13 +123,22 @@ abstract class Schema extends Embedded
 
     /**
      * Validating model
-     * @param mixed  $values
+     * @param string $scenario Default: insert
+     * @param array  $data
+     * @return array list of errors
+     */
+    public static function validate($scenario = 'insert', $data)
+    {
+        return [];
+    }
+
+    /**
      * @param string $scenario
      * @return bool
      */
-    public function isValid($scenario = '')
+    public function isValid($scenario = 'insert')
     {
-        return true;
+        return !count(static::validate($scenario, $this->getAttributes()));
     }
 
     /**
