@@ -259,36 +259,31 @@ class ResultSet implements ResultSetInterface, Countable, Iterator
     }
 
     /**
-     * @param string $attribute - One level deep "field.sub_field"
+     * @param string $attribute - Example: "field.sub_field.sub_sub_field"
      * @return array
      */
     public function pluck($attribute)
     {
-        if (strpos($attribute, '.') === false) {
-            $attrs = null;
-            $property = $attribute;
-        } else {
-            $attrs = explode('.', $attribute);
-            $property = array_shift($attrs);
-        }
-
         $results = [];
+        $key_separator = '.';
+        $keys = explode($key_separator, $attribute);
+
         $this->rewind();
         while ($model = $this->current()) {
             /** @var $model Schema */
 
-            if (!isset($model->$property)) {
-                $this->next();
-                continue;
+            $x = 0;
+            $result = $model;
+            while (isset($keys[$x])) {
+                if ($x === count($keys) - 1) {
+                    $result = $result[$keys[$x]];
+                } else {
+                    $result = $result[$keys[$x]] = $result[$keys[$x]] ?: [];
+                }
+                $x++;
             }
 
-            if ($attrs) {
-                $v = $model->$property;
-                $results[] = $v[$attrs[0]];
-            } else {
-                $results[] = $model->$property;
-            }
-
+            $results[] = $result;
             $this->next();
         }
 
