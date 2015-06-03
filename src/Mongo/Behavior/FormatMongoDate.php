@@ -4,6 +4,7 @@ namespace Reach\Mongo\Behavior;
 
 use DateTime;
 use DateTimeZone;
+use InvalidArgumentException;
 use MongoDate;
 use Reach\Behavior;
 use Reach\Event;
@@ -47,7 +48,7 @@ class FormatMongoDate extends Behavior
         return [
             'afterFind'  => [$this, 'afterFind'],
             'afterSave'  => [$this, 'afterFind'],
-            'beforeSave' => [$this, 'beforeSave'],
+            'beforeSave' => [$this, 'beforeSave']
         ];
     }
 
@@ -57,12 +58,12 @@ class FormatMongoDate extends Behavior
      */
     public function afterFind(Event $event)
     {
-        if (empty($this->attribute)) {
+        if ($this->attribute === null) {
             $this->attribute = $this->behavior_name;
         }
 
-        if (!isset($this->owner->{$this->sourceAttribute})) {
-            throw new \Exception(
+        if (!property_exists(get_class($this->owner), $this->sourceAttribute)) {
+            throw new InvalidArgumentException(
                 'This property "' . $this->sourceAttribute . '" does not exist in this model "' . get_class(
                     $this->owner
                 ) . '"'
@@ -70,12 +71,26 @@ class FormatMongoDate extends Behavior
         }
 
         $this->_original_value = $this->owner->{$this->sourceAttribute};
-        $this->owner->{$this->attribute} = new DateTime('@' . $this->_original_value->sec, new DateTimeZone('UTC'));
+        if ($this->_original_value instanceof MongoDate) {
+            $timestamp = $this->_original_value->sec;
+        } else if (is_numeric($this->_original_value)) {
+            $timestamp = $this->_original_value;
+        } else if (is_string($this->_original_value)) {
+            $timestamp = strtotime($this->_original_value);
+        } else {
+            $timestamp = time();
+        }
+
+        $this->owner->{$this->attribute} = new DateTime('@' . $timestamp, new DateTimeZone('UTC'));
     }
 
     public function beforeSave(Event $event)
     {
-        if (!isset($this->owner->{$this->attribute})) {
+        if (!property_exists(get_class($this->owner), $this->sourceAttribute)) {
+            return;
+        }
+
+        if ($this->attribute === null) {
             return;
         }
 

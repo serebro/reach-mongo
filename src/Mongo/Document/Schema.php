@@ -117,23 +117,28 @@ abstract class Schema extends Embedded
 
     public function setAttributes($values)
     {
-        if (!$this->isValid($values)) {
-            return false;
-        }
-
         parent::setAttributes($values);
         return true;
     }
 
     /**
      * Validating model
-     * @param mixed  $values
+     * @param string $scenario Default: insert
+     * @param array  $data
+     * @return array list of errors
+     */
+    public static function validate($scenario = 'insert', $data)
+    {
+        return [];
+    }
+
+    /**
      * @param string $scenario
      * @return bool
      */
-    public function isValid($values, $scenario = '')
+    public function isValid($scenario = 'insert')
     {
-        return true;
+        return !count(static::validate($scenario, $this->getAttributes()));
     }
 
     /**

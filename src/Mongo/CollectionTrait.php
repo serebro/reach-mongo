@@ -120,7 +120,7 @@ trait CollectionTrait
      * @param array $fields
      * @param array $options
      */
-    public function findAndModify(array $query, array $update = null, array $fields = null, array $options = null)
+    public static function findAndModify(array $query, array $update = null, array $fields = null, array $options = null)
     {
         return static::getCollection()->findAndModify($query, $update, $fields, $options);
     }

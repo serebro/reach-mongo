@@ -62,7 +62,7 @@ class TestSchema extends Schema
         return true;
     }
 
-    public function isValid($values, $scenario = '')
+    public function isValid($scenario = '')
     {
         if (!is_string($this->title)) {
             return false;
