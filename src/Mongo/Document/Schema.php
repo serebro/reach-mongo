@@ -162,12 +162,12 @@ abstract class Schema extends Embedded
         }
 
 
-        if ($this->_id === null || self::isValidMongoId($this->_id)) {
-            $this->_id = new MongoId($this->_id);
-        }
-
         if ($this->beforeInsert() === false) {
             return false;
+        }
+
+        if ($this->_id === null || self::isValidMongoId($this->_id)) {
+            $this->_id = new MongoId($this->_id);
         }
 
         if ($this->beforeSave() === false) {

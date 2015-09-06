@@ -29,7 +29,12 @@ class SequenceId extends Behavior
     public function beforeInsert(Event $event)
     {
         $field = $this->behavior_name;
-        $id = $this->getNewId();
+        $pk = $this->owner->getPrimaryKey();
+        if ($this->owner->getIsNew() && $this->owner->{$pk} === null) {
+            $id = $this->getNewId();
+        } else {
+            $id = $this->owner->{$pk};
+        }
         $this->owner->$field = $id;
         return $id;
     }
